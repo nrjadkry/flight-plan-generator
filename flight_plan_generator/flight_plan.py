@@ -43,10 +43,9 @@ def get_flight_plan(
         distance_between_lines
     )
 
-    #stringify the coordinate points 
+    #stringify the coordinate points
     coordinate_points = [f"{x[0]}, {x[1]}" for x in points]
 
     wpml_generator = WPMLGenerator(coordinate_points)
     wpml_content = wpml_generator.generate_wpml(get_mission_config_json(), get_folder_json(coordinate_points))
     print(wpml_content)
-

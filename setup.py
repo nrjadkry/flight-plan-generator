@@ -12,7 +12,7 @@ setup(
     packages=find_packages(),
     license="GPLv3",
     url="https://github.com/nrjadkry/flight-plan-generator",
-    install_requires=[],
+    install_requires=["geojson", "shapely"],
     keywords=["drone", "flight plan", "waypoints"],
     classifiers=[
         "Development Status :: 3 - Alpha",

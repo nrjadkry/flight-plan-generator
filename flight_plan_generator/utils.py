@@ -1,9 +1,7 @@
 import copy
 
 placemark_data = {
-    "Point": {
-        "coordinates": "85.32847797583463,27.73034357804735"
-    },
+    "Point": {"coordinates": "85.32847797583463,27.73034357804735"},
     "index": "0",  # unique for every placemark
     "executeHeight": "60",  # Height (float)
     "waypointSpeed": "2.5",  # Speed (in m/s) (required if wpml:useGlobalSpeed in template.kml is 0)
@@ -24,9 +22,7 @@ placemark_data = {
         "actionGroupStartIndex": "0",  # start index for this point (placemark_index)
         "actionGroupEndIndex": "0",  # end index for this point  (placemark_index)
         "actionGroupMode": "parallel",
-        "actionTrigger": {
-            "actionTriggerType": "reachPoint"
-        },
+        "actionTrigger": {"actionTriggerType": "reachPoint"},
         "action": {
             "actionId": "1",
             "actionActuatorFunc": "gimbalRotate",
@@ -42,9 +38,9 @@ placemark_data = {
                 "gimbalRotateTimeEnable": "0",
                 "gimbalRotateTime": "0",
                 "payloadPositionIndex": "0",
-            }
-        }
-    }
+            },
+        },
+    },
 }
 
 
@@ -57,7 +53,7 @@ def create_xml_element(doc, parent_element, key, value):
     if key in ["Document", "Folder", "Placemark", "Point", "coordinates"]:
         element = doc.createElement(key)
     else:
-        element = doc.createElementNS('http://www.dji.com/wpmz/1.0.2', f'wpml:{key}')
+        element = doc.createElementNS("http://www.dji.com/wpmz/1.0.2", f"wpml:{key}")
     parent_element.appendChild(element)
     if isinstance(value, dict):
         dict_to_xml(doc, element, value)
@@ -99,7 +95,7 @@ def get_folder_json(points):
             "distance": "0",
             "duration": "0",
             "autoFlightSpeed": "2.5",
-            "Placemark": generate_dynamic_placemarks(points)
+            "Placemark": generate_dynamic_placemarks(points),
         }
     }
 
@@ -108,13 +104,13 @@ def get_mission_config_json():
     return {
         "missionConfig": {
             "flyToWaylineMode": "safely",
-            "finishAction": "goHome",    # goHome on Mission Complete
+            "finishAction": "goHome",  # goHome on Mission Complete
             "exitOnRCLost": "executeLostAction",
             "executeRCLostAction": "goBack",
             "globalTransitionalSpeed": "2.5",
-            "droneInfo": {           # Drone Types (Drone Info)
-            "droneEnumValue": "68",
-            "droneSubEnumValue": "0"
-            }
+            "droneInfo": {  # Drone Types (Drone Info)
+                "droneEnumValue": "68",
+                "droneSubEnumValue": "0",
+            },
         }
     }

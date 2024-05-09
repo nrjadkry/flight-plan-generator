@@ -1,16 +1,15 @@
-import simplekml
-import geopy
-import geojson
 import json
+import geojson
 from shapely.geometry import Polygon, Point, shape, LineString
+from geojson import FeatureCollection, dump
 
 
-def generate_waypoints_within_polygon(polygon, home_point, distance_between_lines):
-    minx, miny, maxx, maxy = polygon.bounds
+def generate_waypoints_within_polygon(aoi, distance_between_lines):
+
+    boundary = Polygon(json.loads(aoi)["features"][0]["geometry"]["coordinates"][0])
+
+    minx, miny, maxx, maxy = boundary.bounds
     waypoints = []
-
-    # Add home point as the starting waypoint
-    waypoints.append(home_point)
 
     # Generate waypoints within the polygon
     y = miny
@@ -36,8 +35,5 @@ def generate_waypoints_within_polygon(polygon, home_point, distance_between_line
                 waypoints.append(x_row_waypoints[0])
 
         row_count += 1
-
-    # Add home point as the last waypoint
-    waypoints.append(home_point)
 
     return waypoints

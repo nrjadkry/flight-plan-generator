@@ -61,7 +61,6 @@ def create_xml_element(doc, parent_element, key, value):
         for sub_value in value:
             create_xml_element(doc, element, key, sub_value)
     else:
-        print("Value =", value)
         element.appendChild(doc.createTextNode(value))
 
 

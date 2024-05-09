@@ -3,13 +3,14 @@ from .utils import dict_to_xml, generate_dynamic_placemarks, get_mission_config_
 from .waypoints import generate_waypoints_within_polygon
 
 
-class KMLGenerator:
+class WPMLGenerator:
     def __init__(self, coordinate_points):
         self.coordinate_points = coordinate_points
 
-    def generate_wpml(self, final_kml_json):
+    def generate_wpml_base(self, final_kml_json):
         # Create XML document
         doc = xml.dom.minidom.Document()
+
         # Create root element <kml> with namespace declaration
         kml = doc.createElementNS('http://www.opengis.net/kml/2.2', 'kml')
         kml.setAttribute("xmlns", "http://www.opengis.net/kml/2.2")
@@ -20,14 +21,14 @@ class KMLGenerator:
 
         return doc.toprettyxml()
 
-    def generate_kml(self, mission_config_json, folder_json):
+    def generate_wpml(self, mission_config_json, folder_json):
         final_kml_json = {
             "Document": {
                 "missionConfig": mission_config_json,
                 "Folder": folder_json
             }
         }
-        return self.generate_wpml(final_kml_json)
+        return self.generate_wpml_base(final_kml_json)
 
 
 def get_flight_plan(
@@ -45,7 +46,7 @@ def get_flight_plan(
     #stringify the coordinate points 
     coordinate_points = [f"{x[0]}, {x[1]}" for x in points]
 
-    kml_generator = KMLGenerator(coordinate_points)
-    kml_content = kml_generator.generate_kml(get_mission_config_json(), get_folder_json(coordinate_points))
-    print(kml_content)
+    wpml_generator = WPMLGenerator(coordinate_points)
+    wpml_content = wpml_generator.generate_wpml(get_mission_config_json(), get_folder_json(coordinate_points))
+    print(wpml_content)
 
